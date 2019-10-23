@@ -1,0 +1,11 @@
+/* Setting up head/master jenkins server */
+
+docker run -it \
+--privilaged \
+--name jenkins \
+-h jenkins \
+--volume-from jenkins-data \
+-p 8080:8080 \
+sanmanivannan/jenkins
+
+/* Setting up head/master jenkins server */

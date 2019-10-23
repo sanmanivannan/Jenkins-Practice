@@ -1,0 +1,14 @@
+/* Setting up data only container */
+
+docker run -it \
+--name jenkins-data \
+-h jenkins-data \
+
+/* This will store the workspace in /var/jenkins_home. All Jenkins data lives in there - including plugins and configuration. You will probably want to make that a persistent volume (recommended): */
+
+-v /var/lib/jenkins \
+-v /var/lib/jenkins_slave_key \
+-e ROLE="slave" \
+sanmanivannan/jenkins  //docker image name
+
+
