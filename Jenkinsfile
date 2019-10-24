@@ -11,14 +11,6 @@ pipeline {
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
             } 
-            stage ('Test')
-                steps {
-                echo 'Testing'
-            }
-            stage ('deploy')
-                steps {
-                echo 'deploy'
-            }
         }
 }
                 
