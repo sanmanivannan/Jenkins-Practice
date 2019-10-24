@@ -1,5 +1,5 @@
 pipeline {
-    agent any {
+    agent any 
         stages {
             stage('Packaging')
                 steps {
@@ -11,7 +11,7 @@ pipeline {
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
             }  
-        }
+        
             stage('Test')
                 steps {
                 echo 'Testing'
@@ -21,6 +21,6 @@ pipeline {
                 echo 'deploy'
             }
         }
-                }
-    }
 }
+                
+
