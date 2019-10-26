@@ -1,0 +1,7 @@
+FROM tomcat:latest
+
+ADD ./target/webapp.war /var/
+
+EXPOSE 8080
+
+CMD sh"catalina.sh", "run"

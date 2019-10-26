@@ -1,0 +1,12 @@
+pipeline {
+    agent any 
+        stages {
+            stage ('Packaging and Building Docker Image'){
+                steps {
+                sh 'mvn clean package'
+                sh "docker build . -t webappdockerbuild.${env.BUILD_ID}"
+            } 
+            }
+        }
+}
+
