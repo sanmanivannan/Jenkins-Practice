@@ -12,14 +12,14 @@ pipeline {
                 }
             } 
             }
-        stage ('Deploy to Staging') {
+        stage ('Deploy to Staging') {                          //seperate free style jenkins project should be created
             steps{
                 build job: 'Deploy_Staging_8090'
             }
 
         }
 
-        stage ('Deploy to Production'){
+        stage ('Deploy to Production'){                         //seperate free style jenkins project should be created
             steps{
             timeout(time: 5, unit: 'HOURS') {
                 input message "Approve for Production"
