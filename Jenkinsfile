@@ -15,7 +15,7 @@ stages{
             steps {
                 stage('Compile-Package'){
                  // Get maven home path
-                 def mvnHome =  tool name: 'maven-3', type: 'maven'   
+                 def mvnHome =  tool name: 'Maven', type: 'maven'   
                  sh "${mvnHome}/bin/mvn package"
                  // sh 'mvn clean package'
             }
