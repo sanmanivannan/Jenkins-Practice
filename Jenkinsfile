@@ -13,7 +13,11 @@ pipeline {
 stages{
         stage('Build'){
             steps {
-                sh 'mvn clean package'
+                stage('Compile-Package'){
+                 // Get maven home path
+                 def mvnHome =  tool name: 'maven-3', type: 'maven'   
+                 sh "${mvnHome}/bin/mvn package"
+                 // sh 'mvn clean package'
             }
             post {
                 success {
