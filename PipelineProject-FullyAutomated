@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     parameters {
          string(name: 'tomcat_dev', defaultValue: '35.166.210.154', description: 'Staging Server') //<AWS EC2 instance IP address>
          string(name: 'tomcat_prod', defaultValue: '34.209.233.6', description: 'Production Server') //<AWS EC2 instance IP address>
@@ -13,13 +12,20 @@ pipeline {
 stages{
         stage('Build'){
             steps {
-                sh 'mvn clean package'
+                  // Get maven home path
+                 //def mvnHome =  tool name: 'Maven', type: 'maven'   
+                 //sh "${mvnHome}/bin/mvn package"
+                 bat 'mvn clean package'
+                 
             }
             post {
                 success {
                     echo 'Now Archiving...'
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
+                failure {
+                    echo 'Failure...'
+                    }
             }
         }
 

@@ -10,6 +10,10 @@ pipeline {
                     echo 'Now Archiving'
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
+
+                failure{
+                echo 'build failure'
+            }
             } 
             }
         stage ('Deploy to Staging') {                          //seperate free style jenkins project should be created
