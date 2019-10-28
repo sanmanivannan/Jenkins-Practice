@@ -13,9 +13,9 @@ stages{
         stage('Build'){
             steps {
                   // Get maven home path
-                 def mvnHome =  tool name: 'Maven', type: 'maven'   
-                 sh "${mvnHome}/bin/mvn package"
-                 // sh 'mvn clean package'
+                 //def mvnHome =  tool name: 'Maven', type: 'maven'   
+                 //sh "${mvnHome}/bin/mvn package"
+                 sh 'mvn clean package'
             }
             post {
                 success {
