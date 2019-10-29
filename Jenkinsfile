@@ -22,8 +22,8 @@ pipeline {
             }
             stage ('Pushing Docker Image to DockerHub'){
                 steps {
-                sh 'docker login -u sanmanivannan -p santharam23'
-                sh 'docker push sanmanivannan/jenkins-test'
+                bat 'docker login -u sanmanivannan -p santharam23'
+                bat "docker push sanmanivannan/webapp.${env.BUILD_ID}"
             } 
             }
         }
