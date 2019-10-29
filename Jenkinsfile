@@ -30,6 +30,7 @@ pipeline {
             } 
             }
              stage ('Run Docker Container from DockerHub Image'){
+                 steps {
                    def dockerrun = 'docker run -p 8080:8080 -d --name my-app sanmanivannan/jenkins-test:latest'
                                                           // bat 'ssh -i secret*.pem user@<awsec2instance-Ip>'
                     sshagent(['ec2-user']) {         //enter the credential details on the sshAgent Plugin
@@ -38,4 +39,4 @@ pipeline {
            }
         }
 }
-
+}
