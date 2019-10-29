@@ -34,7 +34,7 @@ pipeline {
                                                           // bat 'ssh -i secret*.pem user@<awsec2instance-Ip>'
                     sshagent(['ec2-user']) {         //enter the credential details on the sshAgent Plugin
                     sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.36.230 ${dockerrun}"
-}
+ }
            }
         }
 }
