@@ -13,7 +13,7 @@ pipeline {
             stage ('Building Docker Image'){
                 steps {
                 //bat "docker build . -t webapp.${env.BUILD_ID}"
-                bat 'docker build . -t sanmanivannan/jenkins-test'
+                bat "docker build . -t sanmanivannan/jenkins-test:${env.BUILD_ID}"
             } 
             }
             stage('Test') { 
