@@ -7,23 +7,22 @@ pipeline {
         stages {
             stage ('Packaging'){
                 steps { 
-                bat 'mvn clean package'
+                sh 'mvn clean package'
                       } 
             }
             stage ('Building Docker Image'){
                 steps {
-                bat "docker build . -t webapp.${env.BUILD_ID}"
+                sh "docker build . -t webapp.${env.BUILD_ID}"
             } 
-            }
             stage('Test') {
                 steps {
-               echo 'test completed'
-                 }
+        sh 'npm test'
+      }
             }
             stage ('Pushing Docker Image to DockerHub'){
                 steps {
-                bat "docker login -u sanmanivannan -p ${registryCredential}"
-                bat "docker push ${registry}"
+                withCredentials([string(credentialsId: 'mytoken', variable: 'TOKEN')])    
+                sh "docker build . -t webapp.${env.BUILD_ID}"
             } 
             }
         }
