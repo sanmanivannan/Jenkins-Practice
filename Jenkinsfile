@@ -23,7 +23,7 @@ pipeline {
             stage ('Pushing Docker Image to DockerHub'){
                 steps {
                 bat 'docker login -u sanmanivannan -p santharam23'
-                bat 'docker push sanmanivannan/jenkins-test'
+                bat 'docker push docker.io/sanmanivannan/jenkins-test'
             } 
             }
         }
