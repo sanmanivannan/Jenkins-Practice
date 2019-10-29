@@ -22,8 +22,8 @@ pipeline {
             }
             stage ('Pushing Docker Image to DockerHub'){
                 steps {
-                bat "docker login -u sanmanivannan -p ${registryCredential}"
-                bat "docker push ${registry}"
+                sh 'docker login -u sanmanivannan -p santharam23'
+                sh 'docker push sanmanivannan/jenkins-test'
             } 
             }
         }
