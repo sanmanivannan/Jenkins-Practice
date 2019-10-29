@@ -23,7 +23,9 @@ pipeline {
             }
             stage ('Pushing Docker Image to DockerHub'){
                 steps {
-                bat 'docker login -u sanmanivannan -p santharam23'
+                withCredentials([string(credentialsId: 'dhub', variable: 'dockerhub')]) {
+                bat "docker login -u sanmanivannan -p ${dockerhub}"
+                }
                 bat 'docker push docker.io/sanmanivannan/jenkins-test'
             } 
             }
