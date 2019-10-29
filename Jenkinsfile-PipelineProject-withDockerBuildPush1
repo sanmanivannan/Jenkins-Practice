@@ -28,6 +28,23 @@ pipeline {
             //} 
             //}
 
+            //************Alternate method to build and push the image to dockerhub**************
+            //    pipeline {
+            //    agent any
+            //    stages {
+            //    stage('Build image') {
+            //      steps {
+            //          echo 'Starting to build docker image'
+            //    script {
+            //        def customImage = docker.build("my-image:${env.BUILD_ID}")
+            //        customImage.push()
+            //    }
+            //    }
+            //    }
+            //    }
+            //    } 
+            //*******************************************************************
+
              stage ('Pushing Docker Image to DockerHub'){
                 steps {
                 withCredentials([string(credentialsId: 'dhub', variable: 'dockerhub')]) {
