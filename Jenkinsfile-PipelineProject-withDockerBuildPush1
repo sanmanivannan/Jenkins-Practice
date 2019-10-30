@@ -47,7 +47,7 @@ pipeline {
 
              stage ('Pushing Docker Image to DockerHub'){
                 steps {
-                withCredentials([string(credentialsId: 'dhub', variable: 'dockerhub')]) {
+                withCredentials([string(credentialsId: 'dhub', variable: 'dockerhub')]) {  //use credential binding jenkins plugin to generate the syntax
                 bat "docker login -u sanmanivannan -p ${dockerhub}"
                 }
                 bat 'docker push docker.io/sanmanivannan/jenkins-test'

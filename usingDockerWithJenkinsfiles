@@ -1,0 +1,87 @@
+Using Docker with Pipeline 
+===========================
+1. Many organizations use Docker to unify their build and test environments across machines, 
+and to provide an efficient mechanism for deploying applications.
+2. Pipeline has built-in support for interacting with Docker from within a Jenkinsfile.
+
+
+Customizing the execution environment
+======================================
+1. Pipeline is designed to easily use Docker images as the execution environment for a 
+single Stage or the entire Pipeline. 
+2. Meaning that a user can define the tools required for their Pipeline, without having to 
+manually configure agents.
+
+Jenkinsfile (Declarative Pipeline)
+pipeline {
+    agent {
+        docker { image 'node:7-alpine' }
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
+
+Caching data for containers
+============================
+1. Many build tools will download external dependencies and cache them locally for future 
+re-use. Since containers are initially created with "clean" file systems, this can result 
+in slower Pipelines, as they may not take advantage of on-disk caches between subsequent 
+Pipeline runs.
+2. Pipeline supports adding custom arguments which are passed to Docker, allowing users to 
+specify custom Docker Volumes to mount, which can be used for caching data on the agent 
+between Pipeline runs. The following example will cache ~/.m2 between Pipeline runs utilizing 
+the maven container, thereby avoiding the need to re-download dependencies for subsequent runs 
+of the Pipeline.
+
+Jenkinsfile (Declarative Pipeline)
+pipeline {
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B'
+            }
+        }
+    }
+}
+
+Using multiple containers
+=========================
+ It has become increasingly common for code bases to rely on multiple, different, technologies
+ For example, a repository might have both a Java-based back-end API implementation and a 
+ JavaScript-based front-end implementation. Combining Docker and Pipeline allows a 
+ Jenkinsfile to use multiple types of technologies by combining the agent {} directive, with 
+ different stages.
+
+ Jenkinsfile (Declarative Pipeline)
+pipeline {
+    agent none
+    stages {
+        stage('Back-end') {
+            agent {
+                docker { image 'maven:3-alpine' }
+            }
+            steps {
+                sh 'mvn --version'
+            }
+        }
+        stage('Front-end') {
+            agent {
+                docker { image 'node:7-alpine' }
+            }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
