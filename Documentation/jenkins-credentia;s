@@ -1,0 +1,12 @@
+jenkins credentials
+====================
+
+1. credentials is one of the most popular plugins which are added recently as part of the jenkins package
+2. credentials are the module within the jenkins which stores the username,pass, secret key, sectret file, SSH etc.,
+
+There are 2 types of credentials available 
+
+1. system credentials - its used only by the jenkins server are not used by any any jobs within the jenkins
+2. global credentials -  its the credentials which is basically used on the jenkins jobs
+
+
