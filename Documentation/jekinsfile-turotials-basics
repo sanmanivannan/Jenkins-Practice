@@ -1,0 +1,258 @@
+jenkinsfile tutorial documentation
+=====================================
+
+jenkinsfile is the script in which the entire jenkins job execution will be written as the code
+jenkinsfile script can be written in the 2 ways, 
+    1.Scripted file(written in the groovy scripting)
+    2.declarative 
+
+we are mainly use and concentarate on the DECLARATIVE SYNTAX for wiring the jenkinsfiles
+Declarative Pipeline is a relatively recent addition to Jenkins Pipeline which presents a more simplified and opinionated syntax on top of the Pipeline sub-systems.
+
+Basic Structure
+==================
+
+Pipeline{
+
+    agent any
+        stages{
+            stage("build"){
+                steps{
+                    echo "its the build stage"                    
+                }                
+            }
+            stage("test"){
+                steps{
+                    echo "its the test stage"
+                }
+            }
+          
+        }
+    
+}
+
+wrapper syntax
+================
+
+pipeline{
+
+    agent any
+        stages{
+            stage("JSfrontend"){
+                steps{
+                    echo "its the build stage" 
+                    
+                    nodejs('Node-10.17'){                      //wrapper block  
+                          sh 'yarn install'
+                          sh 'yarn -v'
+                    }                   
+                }                
+            }
+            stage("javabackgrolund"){
+                steps{
+                    echo "its the test stage"
+                    withGradel(){                               //wrapper block
+                        sh './gradlew -v'
+                    }
+
+                }
+            }
+          
+        }
+    
+}
+
+
+tools attribute
+==================
+
+pipeline{
+
+    agent any
+
+// WE CAN ALSO USE THE SAME BUILD TOOLS WITHOUT THE WRAPPER COMMANDS MENTIONED ABOVE BY USING THE ATTRIBUTE CALLED "TOOLS"
+// AS ONLY NOW, THE "TOOLS" ATTRIBUTE ON THE JENKINSFILES SUPPOTS ONLY JDK,MAVEN,AND gradle
+    tools{
+        gradle 'Gradle-6.2'      
+    }
+
+        stages{
+            stage("JSfrontend"){
+                steps{
+                    echo "its the build stage" 
+                    
+                    nodejs('Node-10.17'){
+                          sh 'yarn install'
+                          sh 'yarn -v'
+                    }                   
+                }                
+            }
+            stage("javabackgrolund"){
+                steps{
+                    echo "its the test stage"
+                    sh './gradlew -v'
+                    
+                }
+            }
+          
+        }
+    
+}
+
+
+post attribute
+================
+
+Pipeline{
+
+    agent any
+        stages{
+            stage("build"){
+                steps{
+                    echo "its the build stage"                    
+                }                
+            }
+            stage("test"){
+                steps{
+                    echo "its the test stage"
+                }
+            }
+          post{
+              always{
+
+              }
+              success{
+
+              }
+              failure{
+
+              }
+          }
+
+        }
+    
+}
+
+
+conditional attribute (when...expression)
+=======================
+
+CODE_CHANGE = getGitChanges()
+
+Pipeline{
+
+    agent any
+        stages{
+            stage("build"){
+                steps{
+                    echo "its the build stage"                    
+                }                
+            }
+            stage("test"){
+
+            when{
+                expression{
+                    BRANCH_NAME == 'dev' && CODE_CHANGE == true
+
+                }
+            }
+                steps{
+                    echo "its the test stage"
+                }
+            }
+          
+        }
+    
+}
+
+ENVIRONMENTAL VARIABLE
+=============================
+localhost:8080/env-vars.html
+See above code examples for both global variable and local variables
+
+environment attribute + credentials //Credentials and Credentials Binder plugin should be installed in Jenkins
+-----------------------------
+Pipeline{
+
+    agent any
+
+    environment{
+        NEW_VERSION = '1.3.0'
+        SERVER_CREDENTIALS = credentials('<credential ID provided on jenkins UI while setting up the credentials>')
+    }
+
+
+    stages{
+            stage("build"){
+                steps{
+                    echo "its the build stage"  
+                    echo "the new nersion is ${NEW_VERSION}"                  
+                                
+            }
+            stage("test"){
+                steps{
+                    echo "its the test stage"
+                    sh '${SERVER_CREDENTIALS}'   //method 1 using the credentials as the envvarials
+                 }
+
+            stage("dep"){
+                steps{
+                    echo "its the test stage"
+                      //instead of the using the env variable,  using the wrapper function would be ideal
+                      withCredentials([
+                          usernamePassword(credentials: 'server-credential',usernameVariable:USER,passwordVariable:PASS)
+                      ])
+                      { sh"somescript ${USER} ${PASS}"
+
+                      }      
+            }
+          
+        } 
+    
+}
+
+
+Parameter Atrribute
+======================
+
+Pipeline{
+
+    agent any
+
+    parameter{
+
+        //string(name:'VERSION',defaultValue:'',description:'asdsadasdasd asdasdasdas')
+        choice(name:'VERRSION',choice:['choice1','choice2'],description:'')
+        booleanParam(name:'executetest',defaultValue:true,description:'')
+        
+
+
+    }
+        stages{
+            stage("build"){
+                steps{
+                    echo "its the build stage"    
+                    echo "this is the version ${params.VERSION }"                
+                }                
+            }
+            stage("test"){
+                when{
+                    expression{
+                        params.executetest ==true
+                    }
+                }
+                steps{
+                    echo "its the test stage"
+                }
+            }
+          
+        }
+    
+}
+
+
+
+
+
+
+

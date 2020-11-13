@@ -6,7 +6,12 @@ jenkins credentials
 
 There are 2 types of credentials available 
 
-1. system credentials - its used only by the jenkins server are not used by any any jobs within the jenkins
-2. global credentials -  its the credentials which is basically used on the jenkins jobs
+1. system scope - its used only by the jenkins server are not used by any any jobs within the jenkins
+2. global scope -  its the credentials which is basically used on the jenkins jobs
+
+With in the individual "multibranch pipeline" jenkins project ONLY, we will have the 3rd scope,
+
+3. project scope - credentials scoped to the project (we can have all our tools credential;s here such as GIT., etc)
+
 
 

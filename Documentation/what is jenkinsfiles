@@ -1,0 +1,8 @@
+what is jenkinsfile?
+jenkins file is scripted pipeline code(aka pipeline as code) 
+Instead of using the jenkins GUI, we can script all the jenkins build steps on the code in jenkinsfile
+basically jenkinsfile is created on the same code repo when the actual sourcecode of the application exists
+
+
+
+

@@ -1,0 +1,80 @@
+In Jenkins
+=============
+we can install or configure the build tools in 2 ways
+1. within the jenkins settings-->global tools configutaion section
+here in this section we will see the out of the box tools listed by jenkins such as 
+"maven, any, gradel, jdk"
+So, we want to setup anyof the available outofthebox tools we can select the tool and configure instantly by choosing the version# we wanted on our project
+
+2. If our build tool are not listed here outofthebox, we need to download in the plugins sections
+For ewxample., if we want docker or (npm/yard . need to install nodejs plugin first)
+Then configure the build tools based on out needs on the global tools configutaion section
+
+
+In Jenkinsfile
+=================
+
+
+Pipeline{
+
+    agent any{
+        stages{
+            stage("JSfrontend"){
+                steps{
+                    echo "its the build stage" 
+                    
+                    nodejs('Node-10.17'){
+                          sh 'yarn install'
+                          sh 'yarn -v'
+                    }                   
+                }                
+            }
+            stage("javabackgrolund"){
+                steps{
+                    echo "its the test stage"
+                    withGradel(){
+                        sh './gradlew -v'
+                    }
+
+                }
+            }
+          
+        }
+    }
+}
+
+
+WE CAN ALSO USE THE SAME BUILD TOOLS WITHOUT THE WRAPPER COMMANDS MENTIONED ABOVE BY USING THE ATTRIBUTE CALLED "TOOLS"
+AS ONLY NOW, THE "TOOLS" ATTRIBUTE ON THE JENKINSFILES SUPPOTS ONLY JDK,MAVEN,AND gradle
+
+Pipeline{
+
+    agent any
+
+    tools{
+        gradle 'Gradle-6.2'
+    }
+
+        stages{
+            stage("JSfrontend"){
+                steps{
+                    echo "its the build stage" 
+                    
+                    nodejs('Node-10.17'){
+                          sh 'yarn install'
+                          sh 'yarn -v'
+                    }                   
+                }                
+            }
+            stage("javabackgrolund"){
+                steps{
+                    echo "its the test stage"
+                    sh './gradlew -v'
+                    
+                }
+            }
+          
+        }
+    
+}
+

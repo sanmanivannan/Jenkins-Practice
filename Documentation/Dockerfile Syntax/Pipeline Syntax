@@ -1,0 +1,25 @@
+Declarative Pipeline
+Declarative Pipeline is a relatively recent addition to Jenkins Pipeline [1] which presents a more simplified and opinionated syntax on top of the Pipeline sub-systems.
+
+All valid Declarative Pipelines must be enclosed within a pipeline block, for example:
+
+pipeline {
+    /* insert Declarative Pipeline here */
+}
+
+
+The top-level of the Pipeline must be a block, specifically: pipeline { }.
+
+No semicolons as statement separators. Each statement has to be on its own line.
+
+Blocks must only consist of Sections, Directives, Steps, or assignment statements.
+
+A property reference statement is treated as a no-argument method invocation. So, for example, input is treated as input().
+
+You can use the Declarative Directive Generator to help you get started with configuring the directives and sections in your Declarative Pipeline.
+
+
+
+
+
+
