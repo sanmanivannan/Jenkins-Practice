@@ -1,0 +1,29 @@
+
+
+Pipeline{
+
+    agent any
+    
+    environment {
+        PATH = $PATH:
+    }
+    stages{
+        stage(""){
+            steps{
+
+            }
+        }
+         stage(""){
+            steps{
+
+            }
+        }
+         stage(""){
+            steps{
+
+            }
+        }
+    }
+
+
+}
